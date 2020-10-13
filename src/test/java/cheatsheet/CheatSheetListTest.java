@@ -6,16 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CheatSheetListTest {
 
-
     @Test
     void testGetSize() {
+
+        CheatSheetList.clear();
         for (int i = 0; i < 10; i++) {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
         assertEquals(10, CheatSheetList.getSize());
-        for (int i = 0; i < 10; i++) {
-            CheatSheetList.remove("Name" + i);
-        }
     }
 
     @Test
@@ -23,17 +21,26 @@ class CheatSheetListTest {
         // to be added
     }
 
+
+    @Test
+    void testClear() {
+        CheatSheetList.clear();
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        CheatSheetList.clear();
+        assertEquals(0, CheatSheetList.getSize());
+    }
+
     @Test
     void testPrintCheatSheetNames() {
+        CheatSheetList.clear();
         StringBuilder print = new StringBuilder("Current list of cheat sheet:\n");
         for (int i = 0; i < 10; i++) {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
             print.append("Name").append(i).append("\n");
         }
         assertEquals(print.toString(), CheatSheetList.printCheatSheetNames());
-        for (int i = 0; i < 10; i++) {
-            CheatSheetList.remove("Name" + i);
-        }
     }
 
     @Test
@@ -45,10 +52,18 @@ class CheatSheetListTest {
         for (int i = 0; i < 10; i++) {
             CheatSheetList.remove("Name" + i);
         }
+
+        CheatSheetList.clear();
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        assertEquals(10, CheatSheetList.getSize());
     }
 
     @Test
     void testRemove() {
+        // remove(String name);
+        CheatSheetList.clear();
         for (int i = 0; i < 10; i++) {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
@@ -56,16 +71,21 @@ class CheatSheetListTest {
         CheatSheetList.remove("Name3");
         CheatSheetList.remove("Name5");
         assertEquals(7, CheatSheetList.getSize());
+
+        // remove(int index);
+        CheatSheetList.clear();
         for (int i = 0; i < 10; i++) {
-            if (i == 1 || i == 3 || i == 5) {
-                continue;
-            }
-            CheatSheetList.remove("Name" + i);
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
+        CheatSheetList.remove(1);
+        CheatSheetList.remove(3);
+        CheatSheetList.remove(5);
+        assertEquals(7, CheatSheetList.getSize());
     }
 
     @Test
     void testGetCheatSheet() {
+        CheatSheetList.clear();
         CheatSheet test = new CheatSheet("Name1", "Language1", "Details1");
         for (int i = 0; i < 10; i++) {
             if (i == 1) {
@@ -75,8 +95,6 @@ class CheatSheetListTest {
             }
         }
         assertEquals(test, CheatSheetList.getCheatSheet(2));
-        for (int i = 0; i < 10; i++) {
-            CheatSheetList.remove("Name" + i);
-        }
+        assertEquals(test, CheatSheetList.getCheatSheet("Name1"));
     }
 }
