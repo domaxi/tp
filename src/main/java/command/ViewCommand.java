@@ -27,6 +27,5 @@ public class ViewCommand extends Command {
             index = Integer.parseInt(parser.getDescriptionMap().get(ArgumentFlagEnum.INDEX));
         }
         Printer.printViewCheatSheetMessage(CheatSheetList.getCheatSheet(index));
-        System.out.println(CheatSheetList.getCheatSheet(index).getCheatSheetDetails());
     }
 }

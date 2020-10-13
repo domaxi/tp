@@ -26,7 +26,6 @@ public class AddCommand extends Command {
 
             CheatSheet cheatSheet = new CheatSheet(name, programmingLanguage, description);
             CheatSheetList.add(cheatSheet);
-            Printer.printAddNewCheatSheetMessage();
-            Printer.printCheatSheet(cheatSheet);
+            Printer.printAddNewCheatSheetMessage(cheatSheet);
     }
 }

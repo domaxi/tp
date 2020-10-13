@@ -15,7 +15,7 @@ public class ListCommand extends Command {
     @Override
     public void execute() {
         for (int i = 1; i <= CheatSheetList.getSize(); i++) {
-            System.out.println(i + ". " + CheatSheetList.getCheatSheet(i).getCheatSheetName() + " (ProgrammingLanguage: "
+            System.out.println("\t" i + ". " + CheatSheetList.getCheatSheet(i).getCheatSheetName() + " (ProgrammingLanguage: "
                     + CheatSheetList.getCheatSheet(i).getCheatSheetProgrammingLanguage() + ")");
         }
     }
