@@ -2,9 +2,13 @@ package cheatsheet;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CheatSheetListTest {
+    private static Logger logger = Logger.getLogger("Tester");
 
     @Test
     void testGetSize() {
@@ -14,6 +18,7 @@ class CheatSheetListTest {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
         assertEquals(10, CheatSheetList.getSize());
+        logger.log(Level.INFO, "Finished GetSize test");
     }
 
     @Test
@@ -30,6 +35,7 @@ class CheatSheetListTest {
         }
         CheatSheetList.clear();
         assertEquals(0, CheatSheetList.getSize());
+        logger.log(Level.INFO, "Finished Clear test");
     }
 
     @Test
@@ -41,6 +47,7 @@ class CheatSheetListTest {
             print.append("Name").append(i).append("\n");
         }
         assertEquals(print.toString(), CheatSheetList.printCheatSheetNames());
+        logger.log(Level.INFO, "Finished PrintCheatSheetName test");
     }
 
     @Test
@@ -58,6 +65,7 @@ class CheatSheetListTest {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
         assertEquals(10, CheatSheetList.getSize());
+        logger.log(Level.INFO, "Finished Add test");
     }
 
     @Test
@@ -81,6 +89,7 @@ class CheatSheetListTest {
         CheatSheetList.remove(3);
         CheatSheetList.remove(5);
         assertEquals(7, CheatSheetList.getSize());
+        logger.log(Level.INFO, "Finished Remove test");
     }
 
     @Test
@@ -96,5 +105,6 @@ class CheatSheetListTest {
         }
         assertEquals(test, CheatSheetList.getCheatSheet(2));
         assertEquals(test, CheatSheetList.getCheatSheet("Name1"));
+        logger.log(Level.INFO, "Finished GetCheatSheet test");
     }
 }
