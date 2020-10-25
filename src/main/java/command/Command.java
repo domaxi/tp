@@ -1,21 +1,58 @@
 package command;
 
 import exception.CommandException;
-import parser.Parser;
-import storage.DataFileDestroyer;
+
+import parser.CommandFlag;
+import ui.Printer;
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
- * The base class for all commands.
+ * The base class for all Commands.
  */
 public abstract class Command {
-    public static boolean isExitCommand;
-    protected Parser parser;
-    protected DataFileDestroyer fileDestroyer;
+    protected Printer printer;
 
-    public Command(Parser parser) {
-        this.parser = parser;
+    protected ArrayList<CommandFlag> alternativeArguments;
+    protected LinkedHashMap<CommandFlag, String> flagsToDescriptions;
+    public static boolean isExitCommand;
+
+    public Command() {
+    }
+
+    public Command(Printer printer) {
+        this.printer = printer;
+        this.alternativeArguments = new ArrayList<>();
+        this.flagsToDescriptions = new LinkedHashMap<>();
         isExitCommand = false;
-        fileDestroyer = new DataFileDestroyer();
+    }
+
+    public LinkedHashMap<CommandFlag, String> getFlagstodescriptionsMap() {
+        return flagsToDescriptions;
+    }
+
+    public void setFlagstodescriptionsMap(HashMap<CommandFlag, String> flagstodescriptions) {
+        this.flagsToDescriptions.putAll(flagstodescriptions);
+    }
+
+    public ArrayList<CommandFlag> getAlternativeArguments() {
+        return alternativeArguments;
+    }
+
+    public boolean hasAlternativeArgument() {
+        if (alternativeArguments.size() == 0) {
+            return true;
+        }
+
+        for (CommandFlag arg : alternativeArguments) {
+            if (flagsToDescriptions.get(arg) != null && !flagsToDescriptions.get(arg).isEmpty()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public abstract void execute() throws CommandException;

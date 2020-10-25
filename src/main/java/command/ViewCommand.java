@@ -1,34 +1,40 @@
 package command;
 
-import cheatsheet.CheatSheetList;
+import cheatsheet.CheatSheet;
 import exception.CommandException;
-import parser.ArgumentFlagEnum;
-import parser.Parser;
+import parser.CommandFlag;
 import ui.Printer;
 
-public class ViewCommand extends Command {
-    public ViewCommand(Parser parser) {
-        super(parser);
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
+public class ViewCommand extends FinderCommand {
+    public static final String invoker = "/view";
+
+    public ViewCommand(Printer printer) {
+        super(printer);
+
+        flagsToDescriptions.put(CommandFlag.NAME, null);
+        flagsToDescriptions.put(CommandFlag.INDEX, null);
+        alternativeArguments.add(CommandFlag.NAME);
+        alternativeArguments.add(CommandFlag.INDEX);
     }
 
     @Override
     public void execute() throws CommandException {
-        int index = 0;
         try {
-            if (parser.getDescriptionMap().containsKey(ArgumentFlagEnum.NAME)) {
-                String name = parser.getDescriptionMap().get(ArgumentFlagEnum.NAME);
-                for (int i = 0; i < CheatSheetList.getSize(); i++) {
-                    if (CheatSheetList.getCheatSheet(i).getCheatSheetName().equals(name)) {
-                        index = i + 1;
-                        break;
-                    }
-                }
-            } else if (parser.getDescriptionMap().containsKey(ArgumentFlagEnum.INDEX)) {
-                index = Integer.parseInt(parser.getDescriptionMap().get(ArgumentFlagEnum.INDEX));
-            }
-            Printer.printViewCheatSheetMessage(CheatSheetList.getCheatSheet(index));
+            CheatSheet desiredCheatSheet = getCheatSheetFromNameOrIndex();
+            printer.printViewCheatSheetMessage(desiredCheatSheet);
+            copyTextToClipboard(desiredCheatSheet.getDetails());
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             throw new CommandException("Please enter a valid index");
         }
+    }
+
+    private void copyTextToClipboard(String contentToBeCopied) {
+        StringSelection stringSelection = new StringSelection(contentToBeCopied);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 }

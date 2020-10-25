@@ -1,11 +1,13 @@
 package cheatsheet;
 
+import exception.CommandException;
 import org.junit.jupiter.api.Test;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class CheatSheetListTest {
     private static Logger logger = Logger.getLogger("Tester");
@@ -22,12 +24,6 @@ class CheatSheetListTest {
     }
 
     @Test
-    void testGetCheatSheetList() {
-        // to be added
-    }
-
-
-    @Test
     void testClear() {
         CheatSheetList.clear();
         for (int i = 0; i < 10; i++) {
@@ -36,18 +32,6 @@ class CheatSheetListTest {
         CheatSheetList.clear();
         assertEquals(0, CheatSheetList.getSize());
         logger.log(Level.INFO, "Finished Clear test");
-    }
-
-    @Test
-    void testPrintCheatSheetNames() {
-        CheatSheetList.clear();
-        StringBuilder print = new StringBuilder("Current list of cheat sheet:\n");
-        for (int i = 0; i < 10; i++) {
-            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
-            print.append("Name").append(i).append("\n");
-        }
-        assertEquals(print.toString(), CheatSheetList.printCheatSheetNames());
-        logger.log(Level.INFO, "Finished PrintCheatSheetName test");
     }
 
     @Test
@@ -75,21 +59,60 @@ class CheatSheetListTest {
         for (int i = 0; i < 10; i++) {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
-        CheatSheetList.remove("Name1");
-        CheatSheetList.remove("Name3");
-        CheatSheetList.remove("Name5");
-        assertEquals(7, CheatSheetList.getSize());
+
+        try {
+            CheatSheetList.remove("Name1");
+            CheatSheetList.remove("Name3");
+            CheatSheetList.remove("Name5");
+            assertEquals(7, CheatSheetList.getSize());
+        } catch (CommandException e) {
+            fail();
+        }
 
         // remove(int index);
         CheatSheetList.clear();
         for (int i = 0; i < 10; i++) {
             CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
         }
-        CheatSheetList.remove(1);
-        CheatSheetList.remove(3);
-        CheatSheetList.remove(5);
-        assertEquals(7, CheatSheetList.getSize());
+
+        try {
+            CheatSheetList.remove(1);
+            CheatSheetList.remove(3);
+            CheatSheetList.remove(5);
+            assertEquals(7, CheatSheetList.getSize());
+        } catch (CommandException e) {
+            fail();
+        }
         logger.log(Level.INFO, "Finished Remove test");
+
+    }
+
+    @Test
+    void remove_negativeIndex_exceptionThrown() {
+        CheatSheetList.clear();
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        try {
+            CheatSheetList.remove(-1);
+            fail();
+        } catch (CommandException e) {
+            assertEquals("Please enter a valid index", e.getMessage());
+        }
+    }
+
+    @Test
+    void remove_nonExistentName_exceptionThrown() {
+        CheatSheetList.clear();
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        try {
+            CheatSheetList.remove("dummy");
+            fail();
+        } catch (CommandException e) {
+            assertEquals("Please enter a valid index", e.getMessage());
+        }
     }
 
     @Test
@@ -103,8 +126,44 @@ class CheatSheetListTest {
                 CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
             }
         }
-        assertEquals(test, CheatSheetList.getCheatSheet(2));
-        assertEquals(test, CheatSheetList.getCheatSheet("Name1"));
+
+        // test to get cheatsheet by index and by name
+        try {
+            assertEquals(test, CheatSheetList.get(2));
+            assertEquals(test, CheatSheetList.get("Name1"));
+        } catch (CommandException e) {
+            fail();
+        }
         logger.log(Level.INFO, "Finished GetCheatSheet test");
+    }
+
+    @Test
+    void getCheatSheet_negativeIndex_exceptionThrown() {
+        CheatSheetList.clear();
+        CheatSheet test;
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        try {
+            test = CheatSheetList.get(-1);
+            fail();
+        } catch (CommandException e) {
+            assertEquals("Please enter a valid index", e.getMessage());
+        }
+    }
+
+    @Test
+    void getCheatSheet_nonExistentName_exceptionThrown() {
+        CheatSheetList.clear();
+        CheatSheet test;
+        for (int i = 0; i < 10; i++) {
+            CheatSheetList.add(new CheatSheet("Name" + i, "Language" + i, "Details" + i));
+        }
+        try {
+            test = CheatSheetList.get("cheatlogs");
+            fail();
+        } catch (CommandException e) {
+            assertEquals("Please enter a valid name", e.getMessage());
+        }
     }
 }

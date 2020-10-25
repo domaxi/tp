@@ -1,20 +1,23 @@
 package command;
 
 import cheatsheet.CheatSheetList;
-import parser.Parser;
 import storage.DataFileDestroyer;
 import ui.Printer;
 
-
 public class ClearCommand extends Command {
-    public ClearCommand(Parser parser) {
-        super(parser);
+    protected DataFileDestroyer fileDestroyer;
+
+    public static final String invoker = "/clear";
+
+    public ClearCommand(Printer printer, DataFileDestroyer fileDestroyer) {
+        super(printer);
+        this.fileDestroyer = fileDestroyer;
     }
 
     @Override
     public void execute() {
-        Printer.printClearCheatSheetMessage(CheatSheetList.getSize());
         CheatSheetList.clear();
         fileDestroyer.executeFunction();
+        printer.printClearCheatSheetMessage(CheatSheetList.getSize());
     }
 }

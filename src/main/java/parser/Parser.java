@@ -1,97 +1,144 @@
 package parser;
 
-import command.CommandEnum;
+import command.Command;
+import command.AddCommand;
+import command.ClearCommand;
+import command.DeleteCommand;
+import command.EditCommand;
+import command.ExitCommand;
+import command.ListCommand;
+import command.FindCommand;
+import command.HelpCommand;
+import command.ViewCommand;
+import command.FavouriteCommand;
+
+import editor.Editor;
 import exception.CommandException;
+import storage.DataFileDestroyer;
+import ui.Ui;
+import ui.Printer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    private final CommandEnum commandType;
-    private final ArrayList<ArgumentFlagEnum> argEnumSet;
-    private HashMap<ArgumentFlagEnum, String> descriptionMap;
+    private DataFileDestroyer fileDestroyer;
+    private Printer printer;
+    private Ui ui;
+    private Editor editor;
 
+    private static final String FLAG_REGEX = " /[a-z] ";
 
-    public Parser(String userInput) throws CommandException {
-        commandType = parseTypeOfCommand(userInput);
-        argEnumSet = parseTypeOfArgument(userInput);
-        descriptionMap = parseDescription(userInput);
+    public Parser() {
     }
 
-    private CommandEnum parseTypeOfCommand(String userInput) throws CommandException {
+    public Parser(DataFileDestroyer fileDestroyer, Printer printer, Ui ui, Editor editor) {
+        this.fileDestroyer = fileDestroyer;
+        this.printer = printer;
+        this.ui = ui;
+        this.editor = editor;
+    }
+
+    public Command parse(String userInput) throws CommandException {
+        Command commandToBeExecuted = parseCommandType(userInput);
+        ArrayList<CommandFlag> flags = parseFlags(userInput);
+        LinkedHashMap<CommandFlag, String> flagstodescriptions = parseFlagDescriptions(userInput, flags);
+
+        commandToBeExecuted.setFlagstodescriptionsMap(flagstodescriptions);
+        setMissingFlagsDescriptions(commandToBeExecuted);
+        return commandToBeExecuted;
+    }
+
+    private Command parseCommandType(String userInput) throws CommandException {
         String parsedInput = userInput.split(" ")[0];
         switch (parsedInput) {
-        case "/add":
-            return CommandEnum.ADD;
-        case "/clear":
-            return CommandEnum.CLEAR;
-        case "/delete":
-            return CommandEnum.DELETE;
-        case "/exit":
-            return CommandEnum.EXIT;
-        case "/find":
-            return CommandEnum.FIND;
-        case "/help":
-            return CommandEnum.HELP;
-        case "/list":
-            return CommandEnum.LIST;
-        case "/view":
-            return CommandEnum.VIEW;
+        case AddCommand.invoker:
+            return new AddCommand(printer, editor);
+        case ClearCommand.invoker:
+            return new ClearCommand(printer, fileDestroyer);
+        case DeleteCommand.invoker:
+            return new DeleteCommand(printer, fileDestroyer);
+        case EditCommand.invoker:
+            return new EditCommand(printer, editor);
+        case ExitCommand.invoker:
+            return new ExitCommand(printer);
+        case FindCommand.invoker:
+            return new FindCommand(printer);
+        case HelpCommand.invoker:
+            return new HelpCommand(printer);
+        case ListCommand.invoker:
+            return new ListCommand(printer);
+        case ViewCommand.invoker:
+            return new ViewCommand(printer);
+        case FavouriteCommand.invoker:
+            return new FavouriteCommand(printer);
         default:
             throw new CommandException("Please enter a valid command");
         }
     }
 
-    private ArrayList<ArgumentFlagEnum> parseTypeOfArgument(String userInput) {
-        ArrayList<ArgumentFlagEnum> argEnumList = new ArrayList<>();
-        Pattern pattern = Pattern.compile(" /[dnilk] ");
-        Matcher matcher = pattern.matcher(userInput);
-        ArrayList<String> argList = addMatchesToArgEnumSet(matcher);
-        for (String arg : argList) {
-            for (ArgumentFlagEnum ae : ArgumentFlagEnum.values()) {
-                if (arg.equals(ae.getAssociatedKeyWord())) {
-                    argEnumList.add(ae);
+    private ArrayList<CommandFlag> parseFlags(String userInput) {
+        ArrayList<CommandFlag> flags = new ArrayList<>();
+        Pattern flagPattern = Pattern.compile(FLAG_REGEX);
+        Matcher flagMatcher = flagPattern.matcher(userInput);
+        ArrayList<String> matchedFlagNames = getMatches(flagMatcher);
+
+        for (String flag : matchedFlagNames) {
+            for (CommandFlag ae : CommandFlag.values()) {
+                if (flag.equals(ae.getFlag())) {
+                    flags.add(ae);
                     break;
                 }
             }
         }
-        return argEnumList;
+
+        return flags;
     }
 
-    private HashMap<ArgumentFlagEnum, String> parseDescription(String userInput) throws CommandException {
-        descriptionMap = new HashMap<>();
+    private LinkedHashMap<CommandFlag, String> parseFlagDescriptions(String userInput, ArrayList<CommandFlag> flags)
+            throws CommandException {
+        LinkedHashMap<CommandFlag, String> flagstodescriptions = new LinkedHashMap<>();
         try {
-            String[] details = userInput.split(" /[ndilk ]");
+            String[] details = userInput.split(FLAG_REGEX);
             for (int i = 1; i < details.length; i++) {
-                descriptionMap.put(argEnumSet.get(i - 1), details[i].trim());
+                flagstodescriptions.put(flags.get(i - 1), details[i].trim());
             }
         } catch (IndexOutOfBoundsException i) {
             throw new CommandException("Please enter a valid index");
         }
-        return descriptionMap;
+
+        return flagstodescriptions;
     }
 
-    private ArrayList<String> addMatchesToArgEnumSet(Matcher matcher) {
-        ArrayList<String> argList = new ArrayList<>();
-        while (matcher.find()) {
-            argList.add(matcher.group().trim());
+    private void setMissingFlagsDescriptions(Command commandToBeExecuted) {
+        LinkedHashMap<CommandFlag, String> map = commandToBeExecuted.getFlagstodescriptionsMap();
+        while (!commandToBeExecuted.hasAlternativeArgument()) {
+            printer.printAlternativeArgumentPrompt(commandToBeExecuted);
+
+            for (CommandFlag key : map.keySet()) {
+                if (map.get(key) == null) {
+                    printer.printMissingArgument(key);
+
+                    String newArgVal = ui.getUserInput();
+                    if (newArgVal.isEmpty()) {
+                        newArgVal = null;
+                    }
+
+                    commandToBeExecuted.getFlagstodescriptionsMap().replace(key, newArgVal);
+                }
+            }
         }
+    }
+
+    private ArrayList<String> getMatches(Matcher flagMatcher) {
+        ArrayList<String> argList = new ArrayList<>();
+
+        while (flagMatcher.find()) {
+            argList.add(flagMatcher.group().trim());
+        }
+
         return argList;
     }
-
-    public CommandEnum getCommandType() {
-        return commandType;
-    }
-
-
-    public ArrayList<ArgumentFlagEnum> getArgEnumSet() {
-        return argEnumSet;
-    }
-
-    public HashMap<ArgumentFlagEnum, String> getDescriptionMap() {
-        return descriptionMap;
-    }
-
 }
