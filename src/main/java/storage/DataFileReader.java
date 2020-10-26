@@ -205,10 +205,6 @@ public class DataFileReader extends DataFile {
         return isMarkedFavourite;
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     /**
      * Extracts the section of the referenced cheatSheet.
      *
@@ -224,25 +220,6 @@ public class DataFileReader extends DataFile {
         } catch (NullPointerException e) {
             cheatSheetSection = EMPTY;
         }
-<<<<<<< HEAD
-        return convertSpecialChars(cheatSheetSection);
-    }
-
-    /**
-     * Replaces certain characters to conform to the xml file format.
-     *
-     * @param details The string that needs to be refined.
-     * @return A string with all the relevant characters replaced.
-     */
-    private String convertSpecialChars(String details) {
-        return details.replaceAll(AMPERSAND_XML, AMPERSAND)
-                .replaceAll(LESS_THAN_XML, LESS_THAN)
-                .replaceAll(MORE_THAN_XML, MORE_THAN)
-                .replaceAll(SINGLE_QUOTE_XML, SINGLE_QUOTE)
-                .replaceAll(DOUBLE_QUOTE_XML, DOUBLE_QUOTE);
-=======
->>>>>>> master
-
         return cheatSheetSection;
     }
 

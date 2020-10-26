@@ -1,14 +1,10 @@
 package parser;
 
 import cheatsheet.CheatSheetList;
-<<<<<<< HEAD
 
-=======
 import command.Command;
->>>>>>> master
 import command.AddCommand;
 import command.ClearCommand;
-import command.Command;
 import command.DeleteCommand;
 import command.EditCommand;
 import command.ExitCommand;
@@ -81,17 +77,10 @@ public class Parser {
             return new HelpCommand(printer);
         case ListCommand.invoker:
             return new ListCommand(printer, cheatSheetList);
-<<<<<<< HEAD
         case SettingsCommand.invoker:
             return new SettingsCommand(printer);
         case ViewCommand.invoker:
             return new ViewCommand(printer, cheatSheetList);
-=======
-        case ViewCommand.invoker:
-            return new ViewCommand(printer, cheatSheetList);
-        case FavouriteCommand.invoker:
-            return new FavouriteCommand(printer, cheatSheetList);
->>>>>>> master
         default:
             throw new CommandException("Please enter a valid command");
         }

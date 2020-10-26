@@ -15,38 +15,41 @@ public class TablePrinter {
     ArrayList<String[]> finalTable;
     int maxWidth = 30;
     boolean leftJustifiedRows = true;
+    Printer printer;
 
-    public TablePrinter(CheatSheetList cheatSheetList) throws CommandException {
+    public TablePrinter(Printer printer, CheatSheetList cheatSheetList) throws CommandException {
+        this.printer = printer;
         makeRawTable(cheatSheetList.getList());
     }
 
-    public TablePrinter(ArrayList<CheatSheet> cheatSheetToBePrinted) throws CommandException {
+    public TablePrinter(Printer printer, ArrayList<CheatSheet> cheatSheetToBePrinted) throws CommandException {
+        this.printer = printer;
         makeRawTable(cheatSheetToBePrinted);
     }
 
     private void makeRawTable(ArrayList<CheatSheet> cheatSheetsToBePrinted) throws CommandException {
         rawTable = new String[cheatSheetsToBePrinted.size() + 1][4];
         rawTable[0][0] = "INDEX";
-        rawTable[0][1] = "NAME";
-        rawTable[0][2] = "SUBJECT";
-        rawTable[0][3] = "PREVIEW";
+        rawTable[0][1] = printer.nameColor + "NAME" + printer.reset;
+        rawTable[0][2] = printer.subjectColor + "SUBJECT" + printer.reset;
+        rawTable[0][3] = printer.detailsColor + "PREVIEW" + printer.reset;
         for (int i = 1; i <= cheatSheetsToBePrinted.size(); i++) {
             CheatSheet cs = cheatSheetsToBePrinted.get(i - 1);
             assert cs != null;
-            rawTable[i][0] = String.valueOf(i);
-            rawTable[i][1] = cs.getName().trim();
+            rawTable[i][0] = String.valueOf(i) ;
+            rawTable[i][1] = printer.nameColor + cs.getName().trim() + printer.reset;
             try {
-                rawTable[i][2] = cs.getSubject().trim();
+                rawTable[i][2] = printer.subjectColor + cs.getSubject().trim() + printer.reset;
             } catch (NullPointerException n) {
                 rawTable[i][2] = "";
             }
             try {
-                rawTable[i][3] = cs.getDetails().split("\n")[0].trim();
+                rawTable[i][3] = printer.detailsColor + cs.getDetails().split("\n")[0].trim() + printer.reset;
                 if (rawTable[i][3].isEmpty()) {
-                    rawTable[i][3] = cs.getDetails().split("\n")[1].trim();
+                    rawTable[i][3] = printer.detailsColor + cs.getDetails().split("\n")[1].trim() + printer.reset;
                 }
             } catch (ArrayIndexOutOfBoundsException a) {
-                rawTable[i][3] = cs.getDetails().trim();
+                rawTable[i][3] = printer.detailsColor + cs.getDetails().trim() + printer.reset;
             }
         }
     }

@@ -13,13 +13,13 @@ public final class Printer {
             + "----------------------------------------";
     private static final String NEWLINE = System.lineSeparator();
 
-    private ConsoleColorsEnum textColor;
-    private ConsoleColorsEnum favColor;
-    private ConsoleColorsEnum logoColor;
-    private ConsoleColorsEnum nameColor;
-    private ConsoleColorsEnum subjectColor;
-    private ConsoleColorsEnum detailsColor;
-    private ConsoleColorsEnum reset;
+    public ConsoleColorsEnum textColor;
+    public ConsoleColorsEnum favColor;
+    public ConsoleColorsEnum logoColor;
+    public ConsoleColorsEnum nameColor;
+    public ConsoleColorsEnum subjectColor;
+    public ConsoleColorsEnum detailsColor;
+    public ConsoleColorsEnum reset;
 
     public Printer() {
         textColor = ConsoleColorsEnum.BLACK_TEXT;

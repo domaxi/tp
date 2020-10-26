@@ -47,7 +47,7 @@ public class FindCommand extends FinderCommand {
         }
 
         //printMatches(matchedContents);
-        TablePrinter tp = new TablePrinter(matchedContents);
+        TablePrinter tp = new TablePrinter(printer, matchedContents);
         tp.execute();
         SortFilter sortFilter = new SortFilter(cheatSheetList);
         sortFilter.execute(tp);
