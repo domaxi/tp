@@ -108,10 +108,10 @@ public class DataFileWriter extends DataFile {
     /**
      * Sets the favourite status for the respective cheatSheet file.
      *
-     * @param cheatSheet       The cheatSheet that is currently being converted into a file.
-     * @param xmlFileStructure A document containing relevant data of the cheatsheet
-     *                         in a .xml file format.
-     * @param mainRoot         The root that the created element needs to be joined to.
+     * @param cheatSheet                    The cheatSheet that is currently being converted into a file.
+     * @param xmlFileStructure              A document containing relevant data of the cheatsheet
+     *                                      in a .xml file format.
+     * @param mainRoot                      The root that the created element needs to be joined to.
      */
     private void insertFavouriteStatus(CheatSheet cheatSheet, Document xmlFileStructure, Element mainRoot) {
         String favouriteStatus = cheatSheet.getIsFavourite()
@@ -124,10 +124,10 @@ public class DataFileWriter extends DataFile {
     /**
      * Sets the subject for the respective cheatSheet file.
      *
-     * @param cheatSheet       The cheatSheet that is currently being converted into a file.
-     * @param xmlFileStructure A document containing relevant data of the cheatsheet
-     *                         in a .xml file format.
-     * @param mainRoot         The root that the created element needs to be joined to.
+     * @param cheatSheet                    The cheatSheet that is currently being converted into a file.
+     * @param xmlFileStructure              A document containing relevant data of the cheatsheet
+     *                                      in a .xml file format.
+     * @param mainRoot                      The root that the created element needs to be joined to.
      */
     private void insertFileSubject(CheatSheet cheatSheet, Document xmlFileStructure, Element mainRoot) {
         String fileContent = cheatSheet.getSubject();
@@ -138,10 +138,10 @@ public class DataFileWriter extends DataFile {
     /**
      * Sets the contents for the respective cheatSheet file.
      *
-     * @param cheatSheet       The cheatSheet that is currently being converted into a file.
-     * @param xmlFileStructure A document containing relevant data of the cheatsheet
-     *                         in a .xml file format.
-     * @param mainRoot         The root that the created element needs to be joined to.
+     * @param cheatSheet                    The cheatSheet that is currently being converted into a file.
+     * @param xmlFileStructure              A document containing relevant data of the cheatsheet
+     *                                      in a .xml file format.
+     * @param mainRoot                      The root that the created element needs to be joined to.
      */
     private void insertFileContents(CheatSheet cheatSheet, Document xmlFileStructure, Element mainRoot) {
         String fileContent = convertSpecialChars(cheatSheet.getDetails());
@@ -153,7 +153,7 @@ public class DataFileWriter extends DataFile {
      * Replaces certain characters to conform to the xml file format.
      *
      * @param details The string that needs to be refined.
-     * @return A string with all the relevant characters replaced.
+     * @return        A string with all the relevant characters replaced.
      */
     private String convertSpecialChars(String details) {
         return details.replaceAll(AMPERSAND, AMPERSAND_XML)
@@ -184,10 +184,10 @@ public class DataFileWriter extends DataFile {
     /**
      * Writes formatted attributes of the cheatsheet into an xml file.
      *
-     * @param fileDirectory   Name of the file.
-     * @param xmlFileContents Contents of the file in xml format.
-     * @throws TransformerException Thrown if there an exceptional condition occurrs
-     *                              during the transformation process.
+     * @param fileDirectory             Name of the file.
+     * @param xmlFileContents           Contents of the file in xml format.
+     * @throws TransformerException     Thrown if there an exceptional condition occurrs
+     *                                  during the transformation process.
      */
     private void writeToFile(Path fileDirectory, Document xmlFileContents)
             throws TransformerException {
