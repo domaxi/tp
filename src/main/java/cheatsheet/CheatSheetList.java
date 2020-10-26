@@ -120,6 +120,12 @@ public class CheatSheetList {
         return cheatSheet;
     }
 
+    /**
+     * Checks if a cheat sheet exists or not.
+     *
+     * @param name The name attribute of desired cheat sheet
+     * @return true if the cheat sheet exists, false otherwise
+     */
     public boolean exists(String name) {
         for (CheatSheet cs : cheatSheets) {
             if (cs.getName().equals(name)) {
