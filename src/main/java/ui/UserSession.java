@@ -9,6 +9,8 @@ import storage.DataFileReader;
 import storage.DataFileWriter;
 import storage.DataFileDestroyer;
 
+import java.io.IOException;
+
 public class UserSession {
     /*
      * These are objects that will be injected to command subclasses
@@ -30,7 +32,8 @@ public class UserSession {
         printer = new Printer();
         fileReader = new DataFileReader(printer, cheatSheetList);
         fileWriter = new DataFileWriter(printer, cheatSheetList);
-        fileDestroyer = new DataFileDestroyer(printer);
+
+        fileDestroyer = new DataFileDestroyer(printer, cheatSheetList);
         userCommandParser = new Parser(cheatSheetList, editor, fileDestroyer, printer, ui);
     }
 
@@ -45,16 +48,22 @@ public class UserSession {
             try {
                 Command parsedUserCommand = userCommandParser.parse(userInput);
                 parsedUserCommand.execute();
-            } catch (CommandException c) {
+
+                if (parsedUserCommand.isExitCommand) {
+                    return;
+                }
+            } catch (CommandException | InterruptedException | IOException c) {
                 printer.print(c.getMessage());
                 continue;
             }
+
             fileWriter.executeFunction();
-        } while (!Command.isExitCommand);
+        } while (true);
     }
 
     public void exit() {
         ui.closeScanner();
+        editor.dispose();
         printer.printExitLogo();
     }
 }

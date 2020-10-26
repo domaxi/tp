@@ -1,10 +1,12 @@
 package command;
 
+import cheatsheet.CheatSheetList;
 import exception.CommandException;
 
 import parser.CommandFlag;
 import ui.Printer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,10 +16,11 @@ import java.util.LinkedHashMap;
  */
 public abstract class Command {
     protected Printer printer;
+    protected CheatSheetList cheatSheetList;
 
     protected ArrayList<CommandFlag> alternativeArguments;
     protected LinkedHashMap<CommandFlag, String> flagsToDescriptions;
-    public static boolean isExitCommand;
+    public boolean isExitCommand;
 
     public Command() {
     }
@@ -51,9 +54,8 @@ public abstract class Command {
                 return true;
             }
         }
-
         return false;
     }
 
-    public abstract void execute() throws CommandException;
+    public abstract void execute() throws CommandException, InterruptedException, IOException;
 }

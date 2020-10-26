@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Allows the user to read data from the data directory and use it
@@ -69,14 +70,45 @@ public class DataFileReader extends DataFile {
             throw new DirectoryIsEmptyException();
         }
 
-        File[] cheatSheetFiles = dataDirectory.listFiles();
-        assert cheatSheetFiles != null : "File Empty!";
-        for (File cheatSheetFile : cheatSheetFiles) {
+        try {
+            extractFromDirectory(DATA_DIR);
+        } catch (IOException e) {
+            printer.print(e.getMessage());
+        }
+
+    }
+
+    /**
+     * Extracts all cheatsheet files from the given directory.
+     *
+     * @throws IOException Thrown if the /data directory is missing or empty.
+     */
+    private void extractFromDirectory(Path directoryPath) throws IOException {
+        File[] dataDirectoryFiles = directoryPath.toFile().listFiles();
+        if (dataDirectoryFiles == null) {
+            throw new IOException();
+        }
+        for (File dataDirectoryFile : dataDirectoryFiles) {
+            Path filePath = dataDirectoryFile.toPath();
+
+
+            if (Files.isDirectory(filePath)) {
+                extractFromDirectory(filePath);
+                continue;
+            }
+            boolean isPreloadedFile = dataDirectoryFile
+                    .getParentFile()
+                    .getParentFile()
+                    .getName()
+                    .equals(PRELOADED);
+
+            if (isPreloadedFile) {
+                preloadedCheatSheets.add(dataDirectoryFile.toPath());
+            }
+
             try {
-                if (!cheatSheetFile.isDirectory()) {
-                    extractCheatSheet(cheatSheetFile);
-                }
-            } catch (IOException | SAXException | ParserConfigurationException e) {
+                extractCheatSheet(dataDirectoryFile);
+            } catch (ParserConfigurationException | SAXException e) {
                 printer.print(e.getMessage());
             }
         }
@@ -121,7 +153,24 @@ public class DataFileReader extends DataFile {
                 break;
             }
         }
+        bundleCheatSheetComponents(cheatSheetDocument, favouriteElement, subjectElement, contentElement);
+    }
 
+    /**
+     * Extracts and bundles components together to create a new cheatSheet.
+     *
+     * @param cheatSheetDocument  File of the cheatSheet
+     * @param favouriteElement    Node containing the favourite status
+     *                            of the cheatsheet.
+     * @param subjectElement      Node containing the subject of the
+     *                            cheatsheet.
+     * @param contentElement      Node containing the details of the
+     *                            cheatsheet.
+     */
+    private void bundleCheatSheetComponents(File cheatSheetDocument,
+                                            Node favouriteElement,
+                                            Node subjectElement,
+                                            Node contentElement) {
         String cheatSheetName = cheatSheetDocument
                 .getName()
                 .replace(XML_EXTENSION, EMPTY);
@@ -156,7 +205,10 @@ public class DataFileReader extends DataFile {
         return isMarkedFavourite;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     /**
      * Extracts the section of the referenced cheatSheet.
      *
@@ -172,6 +224,7 @@ public class DataFileReader extends DataFile {
         } catch (NullPointerException e) {
             cheatSheetSection = EMPTY;
         }
+<<<<<<< HEAD
         return convertSpecialChars(cheatSheetSection);
     }
 
@@ -187,7 +240,10 @@ public class DataFileReader extends DataFile {
                 .replaceAll(MORE_THAN_XML, MORE_THAN)
                 .replaceAll(SINGLE_QUOTE_XML, SINGLE_QUOTE)
                 .replaceAll(DOUBLE_QUOTE_XML, DOUBLE_QUOTE);
+=======
+>>>>>>> master
 
+        return cheatSheetSection;
     }
 
     /**

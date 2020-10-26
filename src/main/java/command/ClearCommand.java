@@ -7,7 +7,7 @@ import ui.Printer;
 
 public class ClearCommand extends Command {
     protected DataFileDestroyer fileDestroyer;
-    private CheatSheetList cheatSheetList;
+
     public static final String invoker = "/clear";
 
     public ClearCommand(Printer printer, CheatSheetList cheatSheetList, DataFileDestroyer fileDestroyer) {
@@ -18,8 +18,8 @@ public class ClearCommand extends Command {
 
     @Override
     public void execute() {
-        cheatSheetList.clear();
         fileDestroyer.executeFunction();
+        cheatSheetList.clear();
         printer.printClearCheatSheetMessage(cheatSheetList.getSize());
     }
 }

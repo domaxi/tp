@@ -68,18 +68,68 @@ public class DataFileWriter extends DataFile {
      * @param cheatSheet The cheatSheet that is currently being converted into a file.
      */
     public void convertCheatSheetToFile(CheatSheet cheatSheet) {
+        String subjectName = cheatSheet.getSubject();
         String fileName = cheatSheet.getName() + XML_EXTENSION;
-        Path textFile = Paths.get(USER_DIR, DATA, fileName);
+
+        Path subjectDirectory = Paths.get(USER_DIR, DATA, subjectName);
+        Path possiblePreloadedFile = Paths.get(USER_DIR, DATA,
+                PRELOADED, subjectName, fileName);
+        Path textFile = Paths.get(USER_DIR, DATA, subjectName, fileName);
 
         try {
-            if (!Files.exists(textFile)) {
-                Files.createFile(textFile);
+            if (preloadedCheatSheets.contains(possiblePreloadedFile)) {
+                textFile = possiblePreloadedFile;
+            } else {
+                verifyDirectoryExistence(subjectDirectory);
+                if (!Files.exists(textFile)) {
+                    Files.createFile(textFile);
+                }
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Document cheatSheetFile = buildFileContents(cheatSheet);
 
             writeToFile(textFile, cheatSheetFile);
         } catch (IOException | ParserConfigurationException | TransformerException e) {
             printer.print(e.getMessage());
+        }
+    }
+
+    /**
+     * Checks if the /data and /subjectName directories exist and creates them if they
+     * are currently non-existent.
+     *
+     * @param subjectDirectory The cheatSheet that is currently being converted into a file.
+     * @throws IOException     Thrown if errors occur when attempting to create the
+     *                         respective directories.
+     */
+    private void verifyDirectoryExistence(Path subjectDirectory) throws IOException {
+        if (!Files.exists(DATA_DIR)) {
+            Files.createDirectory(DATA_DIR);
+        }
+        if (!Files.exists(subjectDirectory)) {
+            Files.createDirectory(subjectDirectory);
         }
     }
 
@@ -144,23 +194,9 @@ public class DataFileWriter extends DataFile {
      * @param mainRoot                      The root that the created element needs to be joined to.
      */
     private void insertFileContents(CheatSheet cheatSheet, Document xmlFileStructure, Element mainRoot) {
-        String fileContent = convertSpecialChars(cheatSheet.getDetails());
+        String fileContent = cheatSheet.getDetails();
         Element fileContentElement = xmlFileStructure.createElement(CONTENTS_ELEMENT);
         appendToFileStructure(xmlFileStructure, mainRoot, fileContent, fileContentElement);
-    }
-
-    /**
-     * Replaces certain characters to conform to the xml file format.
-     *
-     * @param details The string that needs to be refined.
-     * @return        A string with all the relevant characters replaced.
-     */
-    private String convertSpecialChars(String details) {
-        return details.replaceAll(AMPERSAND, AMPERSAND_XML)
-                .replaceAll(LESS_THAN, LESS_THAN_XML)
-                .replaceAll(MORE_THAN, MORE_THAN_XML)
-                .replaceAll(SINGLE_QUOTE, SINGLE_QUOTE_XML)
-                .replaceAll(DOUBLE_QUOTE, DOUBLE_QUOTE_XML);
     }
 
     /**

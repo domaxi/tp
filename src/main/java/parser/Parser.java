@@ -1,7 +1,11 @@
 package parser;
 
 import cheatsheet.CheatSheetList;
+<<<<<<< HEAD
 
+=======
+import command.Command;
+>>>>>>> master
 import command.AddCommand;
 import command.ClearCommand;
 import command.Command;
@@ -49,10 +53,10 @@ public class Parser {
     public Command parse(String userInput) throws CommandException {
         Command commandToBeExecuted = parseCommandType(userInput);
         ArrayList<CommandFlag> flags = parseFlags(userInput);
-        LinkedHashMap<CommandFlag, String> flagstodescriptions = parseFlagDescriptions(userInput, flags);
+        LinkedHashMap<CommandFlag, String> flagsToDescriptions = parseFlagDescriptions(userInput, flags);
 
-        commandToBeExecuted.setFlagstodescriptionsMap(flagstodescriptions);
-        setMissingFlagsDescriptions(commandToBeExecuted);
+        commandToBeExecuted.setFlagstodescriptionsMap(flagsToDescriptions);
+        setMissingDescriptions(commandToBeExecuted);
         return commandToBeExecuted;
     }
 
@@ -77,10 +81,17 @@ public class Parser {
             return new HelpCommand(printer);
         case ListCommand.invoker:
             return new ListCommand(printer, cheatSheetList);
+<<<<<<< HEAD
         case SettingsCommand.invoker:
             return new SettingsCommand(printer);
         case ViewCommand.invoker:
             return new ViewCommand(printer, cheatSheetList);
+=======
+        case ViewCommand.invoker:
+            return new ViewCommand(printer, cheatSheetList);
+        case FavouriteCommand.invoker:
+            return new FavouriteCommand(printer, cheatSheetList);
+>>>>>>> master
         default:
             throw new CommandException("Please enter a valid command");
         }
@@ -106,33 +117,34 @@ public class Parser {
 
     private LinkedHashMap<CommandFlag, String> parseFlagDescriptions(String userInput, ArrayList<CommandFlag> flags)
             throws CommandException {
-        LinkedHashMap<CommandFlag, String> flagstodescriptions = new LinkedHashMap<>();
+        LinkedHashMap<CommandFlag, String> flagsToDescriptions = new LinkedHashMap<>();
         try {
             String[] details = userInput.split(FLAG_REGEX);
             for (int i = 1; i < details.length; i++) {
-                flagstodescriptions.put(flags.get(i - 1), details[i].trim());
+                //if (flags.get(i-1).equals(CommandFlag.SUBJECT) && (details[i].isBlank() || details[i] == null)) {
+                //    details[i] = "Unsorted";
+                //}
+                flagsToDescriptions.put(flags.get(i - 1), details[i].trim());
             }
         } catch (IndexOutOfBoundsException i) {
             throw new CommandException("Please enter a valid index");
         }
 
-        return flagstodescriptions;
+        return flagsToDescriptions;
     }
 
-    private void setMissingFlagsDescriptions(Command commandToBeExecuted) {
+    private void setMissingDescriptions(Command commandToBeExecuted) {
         LinkedHashMap<CommandFlag, String> map = commandToBeExecuted.getFlagstodescriptionsMap();
         while (!commandToBeExecuted.hasAlternativeArgument()) {
             printer.printAlternativeArgumentPrompt(commandToBeExecuted);
 
             for (CommandFlag key : map.keySet()) {
-                if (map.get(key) == null) {
+                if (map.get(key) == null || map.get(key).isBlank()) {
                     printer.printMissingArgument(key);
-
                     String newArgVal = ui.getUserInput();
-                    if (newArgVal.isEmpty()) {
+                    if (newArgVal.isBlank()) {
                         newArgVal = null;
                     }
-
                     commandToBeExecuted.getFlagstodescriptionsMap().replace(key, newArgVal);
                 }
             }
