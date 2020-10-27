@@ -7,6 +7,7 @@ import ui.Printer;
 public class SettingsCommand extends Command {
     public static final String invoker = "/set";
 
+
     public SettingsCommand(Printer printer) {
         super(printer);
         flagsToDescriptions.put(CommandFlag.COLORSCHEME, null);

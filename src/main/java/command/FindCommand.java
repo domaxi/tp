@@ -46,20 +46,10 @@ public class FindCommand extends FinderCommand {
             throw new CommandException("No matching content found");
         }
 
-        //printMatches(matchedContents);
+
         TablePrinter tp = new TablePrinter(printer, matchedContents);
         tp.execute();
-        SortFilter sortFilter = new SortFilter(cheatSheetList, printer);
-        sortFilter.execute(tp);
+        SortFilter sortFilter = new SortFilter(matchedContents, printer);
+        sortFilter.execute();
     }
-
-    /*
-    private void printMatches(ArrayList<CheatSheet> cheatSheetArrayList) {
-        printer.print("Showing all matches: ");
-        for (CheatSheet cs : cheatSheetArrayList) {
-            printer.printCheatSheet(cs);
-            printer.printWhiteSpace();
-        }
-    }
-    */
 }
