@@ -138,7 +138,7 @@ public final class Printer {
                 + reset + NEWLINE
                 + "\tLists all the possible commands that can be executed in the application." + NEWLINE
 
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/settings /c <OPTION_NUMBER>"
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/set /c <OPTION_NUMBER>"
                 + reset + NEWLINE
                 + "\tChanges the color scheme of the application. Available options: 1 - 3." + NEWLINE
 

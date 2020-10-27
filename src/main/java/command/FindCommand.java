@@ -49,7 +49,7 @@ public class FindCommand extends FinderCommand {
         //printMatches(matchedContents);
         TablePrinter tp = new TablePrinter(printer, matchedContents);
         tp.execute();
-        SortFilter sortFilter = new SortFilter(cheatSheetList);
+        SortFilter sortFilter = new SortFilter(cheatSheetList, printer);
         sortFilter.execute(tp);
     }
 

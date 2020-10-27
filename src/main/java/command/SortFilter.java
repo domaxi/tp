@@ -19,9 +19,9 @@ public class SortFilter {
     Printer printer;
     CheatSheetList cheatSheetList;
 
-    public SortFilter(CheatSheetList cheatSheetList) {
+    public SortFilter(CheatSheetList cheatSheetList, Printer printer) {
         this.cheatSheetList = cheatSheetList;
-        printer = new Printer();
+        this.printer = printer;
     }
 
     public void execute(TablePrinter tp) throws CommandException {
