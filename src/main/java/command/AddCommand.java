@@ -58,7 +58,7 @@ public class AddCommand extends Command {
     }
 
     private String convertToPascalCaseNoSpace(String input) {
-        if(input.length() ==0){
+        if (input.length() == 0) {
             return "Unsorted";
         }
         String[] splitInput = input.split("\\p{IsWhite_Space}+");
