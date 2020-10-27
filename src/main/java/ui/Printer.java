@@ -98,31 +98,55 @@ public final class Printer {
                 + reset + NEWLINE
                 + "\tAdds a new cheat sheet to the application and prompts user to include data" + NEWLINE
                 + "\tinto the cheat sheet." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/delete /i <CHEAT_SHEET_INDEX>"
-                + reset + NEWLINE
-                + "\tTo be used after using /list, Deletes the cheat sheet at INDEX items down the list." + NEWLINE
-                + "\tThe first cheat sheet has an index of 1." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/find /s <PROGRAMMING LANGUAGE> k/ <KEYWORD>"
-                + reset + NEWLINE
-                + "\tFinds a cheat sheet whose names contain any of the given keywords." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/view /i <CHEAT_SHEET_INDEX>"
-                + reset + NEWLINE
-                + "\tView the contents of a cheat sheet either by the name or index." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/list"
-                + reset + NEWLINE
-                + "\tLists all the possible commands that can be executed in the application." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/settings /c <OPTION_NUMBER>"
-                + reset + NEWLINE
-                + "\tChanges the color scheme of the application. Available options: 1 - 3." + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/help"
-                + reset + NEWLINE
-                + "\tDisplays this help message." + NEWLINE
+
                 + ConsoleColorsEnum.BOLD + "" + logoColor + "/clear"
                 + reset + NEWLINE
                 + "\tClears all entries from the cheat sheet." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/delete /i <CHEAT_SHEET_INDEX>"
+                + reset + NEWLINE
+                + ConsoleColorsEnum.BOLD + "" + favColor + "/delete /n <CHEAT_SHEET_NAME>"
+                + reset + NEWLINE
+                + "\tTo be used after using /list, Deletes the cheat sheet at INDEX items down the list." + NEWLINE
+                + "\tThe first cheat sheet has an index of 1." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/edit /i <CHEAT_SHEET_INDEX>"
+                + reset + NEWLINE
+                + ConsoleColorsEnum.BOLD + "" + favColor + "/edit /n <CHEAT_SHEET_NAME>"
+                + reset + NEWLINE
+                + "\tEdits the details/content of the cheat sheet." + NEWLINE
+
                 + ConsoleColorsEnum.BOLD + "" + logoColor + "/exit"
                 + reset + NEWLINE
-                + "\tExits the application." + NEWLINE);
+                + "\tExits the application." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/favourite /i <CHEAT_SHEET_INDEX>"
+                + reset + NEWLINE
+                + ConsoleColorsEnum.BOLD + "" + favColor + "/favourite /n <CHEAT_SHEET_NAME>"
+                + reset + NEWLINE
+                + "\tMarks the cheat sheet as favourite." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/find /s <PROGRAMMING LANGUAGE> k/ <KEYWORD>"
+                + reset + NEWLINE
+                + "\tFinds a cheat sheet whose names contain any of the given keywords." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/help"
+                + reset + NEWLINE
+                + "\tDisplays this help message." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/list"
+                + reset + NEWLINE
+                + "\tLists all the possible commands that can be executed in the application." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/settings /c <OPTION_NUMBER>"
+                + reset + NEWLINE
+                + "\tChanges the color scheme of the application. Available options: 1 - 3." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/view /i <CHEAT_SHEET_INDEX>"
+                + reset + NEWLINE
+                + ConsoleColorsEnum.BOLD + "" + favColor + "/view /n <CHEAT_SHEET_NAME>"
+                + reset + NEWLINE
+                + "\tView the contents of a cheat sheet either by the name or index." + NEWLINE);
     }
 
     public void printCheatSheet(CheatSheet cheatSheet) {
