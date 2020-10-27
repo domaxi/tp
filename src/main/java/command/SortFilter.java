@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class SortFilter {
     final String promptSortConfig = ConsoleColorsEnum.RED_TEXT
-        + "Sort filter (1: name ascending, 2: language ascending, 3: name descending" + ", 4: "
-        + "language descending or anything else to skip)" + ConsoleColorsEnum.RESET_TEXT;
+        + "Sort filter (1: name ascending, 2: subject ascending, 3: name descending" + ", 4: "
+        + "subject descending or anything else to skip)" + ConsoleColorsEnum.RESET_TEXT;
     Printer printer;
     CheatSheetList cheatSheetList;
 
@@ -50,7 +50,7 @@ public class SortFilter {
             break;
         case "2":
             cheatSheetList.getList().sort(new SortBySubject());
-            printer.print("Sorted language in ascending order");
+            printer.print("Sorted subject in ascending order");
             break;
         case "3":
             cheatSheetList.getList().sort(new SortByNameRev());
@@ -58,7 +58,7 @@ public class SortFilter {
             break;
         case "4":
             cheatSheetList.getList().sort(new SortBySubjectRev());
-            printer.print("Sorted language in descending order");
+            printer.print("Sorted subject in descending order");
             break;
         default:
             throw new CommandException("Exiting list command ...");
