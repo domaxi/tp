@@ -113,7 +113,7 @@ public class CheatSheetList {
         }
         CheatSheet cheatSheet;
         try {
-            cheatSheet = get(index);
+            cheatSheet = get(index + 1);
         } catch (CommandException e) {
             throw new CommandException("Please enter a valid name");
         }
