@@ -120,9 +120,9 @@ public final class Printer {
                 + reset + NEWLINE
                 + "\tExits the application." + NEWLINE
 
-                + ConsoleColorsEnum.BOLD + "" + logoColor + "/favourite /i <CHEAT_SHEET_INDEX>"
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/fav /i <CHEAT_SHEET_INDEX>"
                 + reset + NEWLINE
-                + ConsoleColorsEnum.BOLD + "" + favColor + "/favourite /n <CHEAT_SHEET_NAME>"
+                + ConsoleColorsEnum.BOLD + "" + favColor + "/fav /n <CHEAT_SHEET_NAME>"
                 + reset + NEWLINE
                 + "\tMarks the cheat sheet as favourite." + NEWLINE
 
