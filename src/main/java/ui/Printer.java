@@ -89,10 +89,6 @@ public final class Printer {
         print(LINE + "" + NEWLINE + NEWLINE + "Please enter a Command:");
     }
 
-    public void printWhiteSpace() {
-        print(" ");
-    }
-
     public void printHelpSheet() {
         print(ConsoleColorsEnum.BOLD + "" + logoColor + "/add /n <CHEAT_SHEET_NAME> /s<SUBJECT>"
                 + reset + NEWLINE
@@ -153,30 +149,8 @@ public final class Printer {
     public void printCheatSheet(CheatSheet cheatSheet) {
         print(nameColor + "\tName: " + cheatSheet.getName() + NEWLINE
                 + subjectColor + "\tSubject: " + cheatSheet.getSubject() + NEWLINE
-                + detailsColor + "\tDetails: " + wrapDescription(cheatSheet.getDetails())
+                + detailsColor + "\tDetails: " + cheatSheet.getWrappedDetails()
                 + reset);
-    }
-
-    private String wrapDescription(String string) {
-        String[] parsedDescription = string.split("\n");
-        StringBuilder wrappedDescription = new StringBuilder();
-        for (String s : parsedDescription) {
-            wrappedDescription.append(s);
-            wrappedDescription.append("\n\t\t\t ");
-        }
-        return wrappedDescription.toString();
-    }
-
-    public void printCheatSheetList(CheatSheetList cheatSheetList) {
-        int i = 0;
-        for (CheatSheet cs : cheatSheetList.getList()) {
-            print("\t"
-                    + (++i) + ". " + nameColor + cs.getName() + reset
-                    + " (Subject: " + subjectColor
-                    + cs.getSubject() + reset + ")"
-                    + (cs.getIsFavourite() ? favColor + " *\n" : "\n")
-                    + reset);
-        }
     }
 
     public void printCheatSheetSize(CheatSheetList cheatSheetList) {
