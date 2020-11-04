@@ -19,6 +19,7 @@ public final class Printer {
     public ConsoleColorsEnum nameColor;
     public ConsoleColorsEnum subjectColor;
     public ConsoleColorsEnum detailsColor;
+    public ConsoleColorsEnum alertColor;
     public ConsoleColorsEnum reset;
 
     public Printer() {
@@ -28,6 +29,7 @@ public final class Printer {
         nameColor = ConsoleColorsEnum.BRIGHT_CYAN_TEXT;
         subjectColor = ConsoleColorsEnum.BRIGHT_BLUE_TEXT;
         detailsColor = ConsoleColorsEnum.WHITE_TEXT;
+        alertColor = ConsoleColorsEnum.BOLD_RED_TEXT;
         reset = ConsoleColorsEnum.WHITE_TEXT;
     }
 
@@ -185,6 +187,11 @@ public final class Printer {
         print("Now you have no cheatsheets" + reset);
     }
 
+    public void printDeleteConfirmation(CheatSheet cheatSheet) {
+        print(alertColor + "Are you sure to delete the" + cheatSheet.getName() + " cheatsheet?" + NEWLINE
+                + "Type Y or Yes to confirm, or any other character to cancel" + reset);
+    }
+
     public void printDeleteCheatSheetMessage(CheatSheet cheatSheet, CheatSheetList cheatSheetList) {
         print(textColor + "This cheat sheet has been deleted: " + reset);
         printCheatSheet(cheatSheet);
@@ -225,6 +232,7 @@ public final class Printer {
             nameColor = ConsoleColorsEnum.BRIGHT_MAGENTA_TEXT;
             subjectColor = ConsoleColorsEnum.BOLD_MAGENTA_TEXT;
             detailsColor = ConsoleColorsEnum.WHITE_TEXT;
+            alertColor = ConsoleColorsEnum.BOLD_RED_TEXT;
             reset = ConsoleColorsEnum.WHITE_TEXT;
             break;
         case 2:
@@ -234,6 +242,7 @@ public final class Printer {
             nameColor = ConsoleColorsEnum.BRIGHT_RED_TEXT;
             subjectColor = ConsoleColorsEnum.BOLD_YELLOW_TEXT;
             detailsColor = ConsoleColorsEnum.WHITE_TEXT;
+            alertColor = ConsoleColorsEnum.BOLD_RED_TEXT;
             reset = ConsoleColorsEnum.WHITE_TEXT;
             break;
         case 3:
@@ -243,6 +252,7 @@ public final class Printer {
             nameColor = ConsoleColorsEnum.BOLD_WHITE_TEXT;
             subjectColor = ConsoleColorsEnum.WHITE_TEXT;
             detailsColor = ConsoleColorsEnum.WHITE_TEXT;
+            alertColor = ConsoleColorsEnum.BOLD_RED_TEXT;
             reset = ConsoleColorsEnum.WHITE_TEXT;
             break;
         default:
@@ -252,6 +262,7 @@ public final class Printer {
             nameColor = ConsoleColorsEnum.BRIGHT_CYAN_TEXT;
             subjectColor = ConsoleColorsEnum.BRIGHT_BLUE_TEXT;
             detailsColor = ConsoleColorsEnum.WHITE_TEXT;
+            alertColor = ConsoleColorsEnum.BOLD_RED_TEXT;
             reset = ConsoleColorsEnum.WHITE_TEXT;
             break;
         }
