@@ -157,10 +157,10 @@ public final class Printer {
                 + reset);
     }
 
-    private String wrapDescription (String string) {
+    private String wrapDescription(String string) {
         String[] parsedDescription = string.split("\n");
         StringBuilder wrappedDescription = new StringBuilder();
-        for(String s : parsedDescription){
+        for (String s : parsedDescription) {
             wrappedDescription.append(s);
             wrappedDescription.append("\n\t\t\t ");
         }
