@@ -153,7 +153,18 @@ public final class Printer {
     public void printCheatSheet(CheatSheet cheatSheet) {
         print(nameColor + "\tName: " + cheatSheet.getName() + NEWLINE
                 + subjectColor + "\tSubject: " + cheatSheet.getSubject() + NEWLINE
-                + detailsColor + "\tDetails: " + cheatSheet.getDetails() + reset);
+                + detailsColor + "\tDetails: " + wrapDescription(cheatSheet.getDetails())
+                + reset);
+    }
+
+    private String wrapDescription (String string) {
+        String[] parsedDescription = string.split("\n");
+        StringBuilder wrappedDescription = new StringBuilder();
+        for(String s : parsedDescription){
+            wrappedDescription.append(s);
+            wrappedDescription.append("\n\t\t\t ");
+        }
+        return wrappedDescription.toString();
     }
 
     public void printCheatSheetList(CheatSheetList cheatSheetList) {
