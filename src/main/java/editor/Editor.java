@@ -252,7 +252,6 @@ public class Editor extends JFrame implements ActionListener {
             textArea.setText("");
             break;
         case "Cancel":
-            textArea.setText("");
             close();
             break;
         case "Copy":

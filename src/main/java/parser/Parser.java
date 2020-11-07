@@ -39,7 +39,7 @@ public class Parser {
     }
 
     public Parser(CheatSheetList cheatSheetList, Editor editor,
-                  DataFileDestroyer fileDestroyer,  Printer printer, Ui ui, Settings settings) {
+                  DataFileDestroyer fileDestroyer, Printer printer, Ui ui, Settings settings) {
         this.cheatSheetList = cheatSheetList;
         this.editor = editor;
         this.fileDestroyer = fileDestroyer;
@@ -143,7 +143,14 @@ public class Parser {
             printer.printAlternativeArgumentPrompt(commandToBeExecuted);
 
             for (CommandFlag key : map.keySet()) {
-                if (map.get(key) == null || map.get(key).isBlank()) {
+                /* If the key is an alternative argument of the command
+                  but the command already has another alternative argument filled
+                   skip this key*/
+                if (commandToBeExecuted.getAlternativeArguments().contains(key)
+                    && commandToBeExecuted.hasAlternativeArgument()) {
+                    continue;
+                } else if ((map.get(key) == null || map.get(key).isBlank()) && key != CommandFlag.DELETE) {
+
                     printer.printMissingArgument(key);
                     String newArgVal = ui.getUserInput();
                     if (newArgVal.isBlank()) {

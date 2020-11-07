@@ -152,8 +152,13 @@ public final class Printer {
 
                 + ConsoleColorsEnum.BOLD + "" + logoColor + "/set /c <OPTION_NUMBER>"
                 + reset + NEWLINE
-                + "\tChanges the color scheme of the application. Available options: 1 - 3."
-                + "Type 0 to reset to default color scheme" + NEWLINE
+                + "\tChanges the color scheme of the application. Available options: 0 - 3." + NEWLINE
+
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/set /m on"
+                + reset + NEWLINE
+                + ConsoleColorsEnum.BOLD + "" + logoColor + "/set /m off"
+                + reset + NEWLINE
+                + "\tEnables/disables the help message for commands." + NEWLINE
 
                 + ConsoleColorsEnum.BOLD + "" + logoColor + "/view /i <CHEAT_SHEET_INDEX>"
                 + reset + NEWLINE
@@ -269,6 +274,10 @@ public final class Printer {
             reset = ConsoleColorsEnum.WHITE_TEXT;
             break;
         }
+        printSetColorMessage(option);
+    }
+
+    public void printSetColorMessage(int option) {
         if (option < 0 || option > 3) {
             print("Invalid option " + option + ". Changed color scheme to default colors:\n"
                     + favColor + "\tColor 1\n"
@@ -284,69 +293,34 @@ public final class Printer {
         }
     }
 
-    // prints all colors, for debugging purposes only
-    public void printColors() {
-        print(ConsoleColorsEnum.BLACK_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_BLACK_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_BLACK_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.WHITE_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_WHITE_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_WHITE_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.BLUE_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_BLUE_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_BLUE_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.RED_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_RED_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_RED_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.CYAN_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_CYAN_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_CYAN_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.YELLOW_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_YELLOW_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.GREEN_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_GREEN_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_GREEN_TEXT + "TEST\n" + reset);
-
-        print(ConsoleColorsEnum.MAGENTA_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BRIGHT_MAGENTA_TEXT + "TEST\n" + reset);
-        print(ConsoleColorsEnum.BOLD_MAGENTA_TEXT + "TEST\n" + reset);
-    }
-
     public void printStartHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + NEWLINE + "Here are some basics commands to get you started: "
-            + NEWLINE + "\t\"/add\": Add your own cheat sheet"
-            + NEWLINE + "\t\"/list\": List all cheat sheet you currently own, including those we preloaded for you"
-            + NEWLINE + "\t\"/view\": View the contents of a specific cheat sheet, we recommend you to use the list "
-            + "command before this. "
-            + NEWLINE + "\t\t\t You can view the contents using cheat sheet index or name."
-            + NEWLINE + "Enter \"/help\" to see the details of all commands"
-            + ConsoleColorsEnum.RESET_TEXT);
+                + NEWLINE + "Here are some basics commands to get you started: "
+                + NEWLINE + "\t\"/add\": Add your own cheat sheet"
+                + NEWLINE + "\t\"/list\": List all cheat sheet you currently own, including those we preloaded for you"
+                + NEWLINE + "\t\"/view\": View the contents of a specific cheat sheet,"
+                + " we recommend you to use the list command before this. "
+                + NEWLINE + "\t\t\t You can view the contents using cheat sheet index or name."
+                + NEWLINE + "Enter \"/help\" to see the details of all commands"
+                + ConsoleColorsEnum.RESET_TEXT);
     }
 
     private void printRepeatedHelpMessagePartOne(String commandType) {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The " + commandType + " does not work alone."
-            + NEWLINE + "We need some necessary information from you before we could add your cheat sheet."
-            + NEWLINE + "Don't worry, you do not have to enter the command again."
-            + NEWLINE + "We would prompt you to enter the necessary information, one by one."
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The " + commandType + " does not work alone."
+                + NEWLINE + "We need some necessary information from you before we could add your cheat sheet."
+                + NEWLINE + "Don't worry, you do not have to enter the command again."
+                + NEWLINE + "We would prompt you to enter the necessary information, one by one."
+                + ConsoleColorsEnum.RESET_TEXT);
     }
 
     private void printRepeatedHelpMessagePartTwo() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "You also could enter the full command next time if you do not wish to be prompted to enter fields "
-            + "one by one"
-            + NEWLINE + "\"/help\" to see more details on the structure of full command."
-            + NEWLINE + "To stop messages like this from appearing again, input this command: \"/set /m remove\""
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "You also could enter the full command next time if you do not wish to be prompted to enter fields "
+                + "one by one"
+                + NEWLINE + "\"/help\" to see more details on the structure of full command."
+                + NEWLINE + "To stop messages like this from appearing again, input this command: \"/set /m off\""
+                + ConsoleColorsEnum.RESET_TEXT);
     }
 
     public void printCommandHelpMessage(Class commandClass) {
@@ -368,68 +342,78 @@ public final class Printer {
     private void printAddCommandHelpMessage() {
         printRepeatedHelpMessagePartOne("ADD");
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "NAME is necessary while SUBJECT isn't. <<enter>> to skip field."
-            + NEWLINE + "We will automatically assign \"Unsorted\" as subject if no subject is provided."
-            + NEWLINE
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "NAME is necessary while SUBJECT isn't. <<enter>> to skip field."
+                + NEWLINE + "We will automatically assign \"Unsorted\" as subject if no subject is provided."
+                + NEWLINE
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartTwo();
     }
 
     private void printClearCommandHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The CLEAR command clears ALL cheat sheets except for those that are preloaded."
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The CLEAR command clears ALL cheat sheets except for those that are preloaded."
+                + ConsoleColorsEnum.RESET_TEXT);
     }
 
     private void printDeleteCommandHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The DELETE command deletes a cheatsheet you specifies."
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The DELETE command deletes a cheatsheet you specifies."
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartOne("DELETE");
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "We need you to either input NAME or INDEX. <<enter>> to skip field."
-            + NEWLINE
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "We need you to either input NAME or INDEX. <<enter>> to skip field."
+                + NEWLINE
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartTwo();
     }
 
     private void printEditCommandHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The EDIT command edits an existing cheat sheet."
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The EDIT command edits an existing cheat sheet."
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartOne("EDIT");
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "We need you to input either NAME or INDEX. <<enter>> to skip field."
-            + NEWLINE
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "We need you to input either NAME or INDEX. <<enter>> to skip field."
+                + NEWLINE
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartTwo();
     }
 
     private void printFindCommandHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The EDIT command finds an existing cheat sheet based on information provided."
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The EDIT command finds an existing cheat sheet based on information provided."
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartOne("FIND");
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "We need you to input NAME, SUBJECT, or KEYWORD in cheatsheet or any combinations of these fields."
-            + "<<enter>> to skip field."
-            + NEWLINE
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "We need you to input NAME, SUBJECT, or KEYWORD in cheatsheet or any combinations of these fields."
+                + "<<enter>> to skip field."
+                + NEWLINE
+                + ConsoleColorsEnum.RESET_TEXT);
         printRepeatedHelpMessagePartTwo();
     }
 
     private void printListCommandHelpMessage() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "The LIST command lists all current existing cheat sheets."
-            + NEWLINE + "You could also sort the cheat sheets according to name or subject"
-            + NEWLINE + "To stop messages like from appearing again, input this command: \"/set /m remove\""
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "The LIST command lists all current existing cheat sheets."
+                + NEWLINE + "You could also sort the cheat sheets according to name or subject"
+                + NEWLINE + "To stop messages like from appearing again, input this command: \"/set /m off\""
+                + ConsoleColorsEnum.RESET_TEXT);
     }
 
     public void printClearConfirmation() {
         print(ConsoleColorsEnum.BRIGHT_YELLOW_TEXT
-            + "Are you sure you want to delete all your cheat sheets"
-            + NEWLINE + "Type Y or Yes to confirm, or any other character to cancel"
-            + ConsoleColorsEnum.RESET_TEXT);
+                + "Are you sure you want to delete all your cheat sheets"
+                + NEWLINE + "Type Y or Yes to confirm, or any other character to cancel"
+                + ConsoleColorsEnum.RESET_TEXT);
+    }
+
+    public void printSetDisplayingHelpMessages(boolean isDisplayingHelpMessages) {
+        if (isDisplayingHelpMessages) {
+            print("You have enabled the help messages."
+                    + NEWLINE + "You can disable the help messages using \"/set /m off\"\n");
+        } else {
+            print("You have disabled the help messages."
+                    + NEWLINE + "You can re-enable it again using \"/set /m on\"\n");
+        }
     }
 }
