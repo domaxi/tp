@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
