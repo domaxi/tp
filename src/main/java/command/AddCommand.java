@@ -49,7 +49,7 @@ public class AddCommand extends Command {
             throw new CommandException("Name cannot be blank");
         }
 
-        if(name.length() > 250){
+        if (name.length() > 250) {
             throw new CommandException("The name exceeds the maximum character limit");
         }
 
@@ -68,7 +68,7 @@ public class AddCommand extends Command {
             if (!subject.matches(NO_SPECIAL_CHAR)) {
                 throw new CommandException("Subject can only contain alphanumeric characters");
             }
-            if (subject.length() > 250){
+            if (subject.length() > 250) {
                 throw new CommandException("Subject cannot be more than 250 characters");
             }
             subject = convertToPascalCaseNoSpace(subject);
