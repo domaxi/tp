@@ -229,7 +229,7 @@ Below is the class diagram for the command package.
 `FinderCommand` provides the capability to search for the desired cheatsheet using the `getCheatSheetFromNameOrIndex()` method. Upon method calls, the sub-class of `FinderCommand` will first call this method to get the desired cheatsheet, then it proceeds to process this cheatsheet object based on its own functionality. A sequence diagram will be given for each commands to better illustrate the interaction between this class with its sub-classes.
 
 <a id="add"></a>
-##### 4.2.3.1 Add
+##### 4.2.3.2 Add
 The AddCommand is used to add cheatsheets into CheatLogs.
 The picture bellow shows how the AddCommand is executed.
 ![AddCommand Sequence Diagram](https://i.ibb.co/GtFKP7V/Add-Command-4.png)
@@ -244,7 +244,7 @@ The picture bellow shows how the AddCommand is executed.
 9. Finally, once the cheatSheet has been added into the cheatSheetList, the AddCommand will invoke the `printAddNewCheatSheetMessage(cheatSheet,cheatSheetList)` to print the confirmation message.
 
 <a id="edit"></a>
-##### 4.2.3.2 Edit
+##### 4.2.3.3 Edit
 The edit command allows the user to edit the content of the CheatSheet object.
 The image bellow is how the EditCommand is executed.
 ![EditCommand Sequence Diagram](https://i.ibb.co/tPg1pjL/Edit-Command-4.png)
@@ -260,7 +260,7 @@ The image bellow is how the EditCommand is executed.
 10. To reflect the change, the EditCommand object will invoke `cheatsheet.setDetail(editor.getContent())` method to get the content of the cheatsheet and also change the content of the cheatsheet.
 
 <a id="view"></a>
-##### 4.2.3.3 View
+##### 4.2.3.4 View
 The view command is used to view the content of the cheatsheet in tht command line interface.
 The sequence diagram bellow demonstrates how tht view command is executed.
 ![ViewCommand_Sequence_Diagram](https://i.ibb.co/GF4LZYy/View-Command-3.png)
@@ -272,7 +272,7 @@ The sequence diagram bellow demonstrates how tht view command is executed.
 6. Afterwards, it will call the `printViewCheatSheetMessage` of the printer class to print the cheatsheet into the command line.
 
 <a id="exit"></a>
-##### 4.2.3.4 Exit
+##### 4.2.3.5 Exit
 The exit command is used to exit the CheatLogs program.
 The sequence digaram bellow will demonstrate how it is executed.
 ![ExitCommand_Sequence-Diagram](https://i.ibb.co/4SxcnL5/Exit-Command-1.png)
