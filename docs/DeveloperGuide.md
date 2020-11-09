@@ -628,8 +628,248 @@ versions of CheatLogs was designed to solve.
 
 <a id="use-cases"></a>
 ## 7.3 Use cases<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
+### 7.3.1 Use Case: Add CheatSheet
+#### MSS
 
+1. User request to add a cheatsheet
+2. CheatLogs requests for name and subject
+3. User provides name and subject
+4. CheatLogs displays text editor
+5. User fills in the content of the cheatsheet
+6. User clicks `Save` button
+7. CheatLogs adds cheatsheet.
 
+   *Use case ends.*
+#### Extensions
+**3a. User doesnt provide name and index**
+
+*3a.1. Use case resumes at step 2.*
+        
+**3b. User provides an existing cheatsheet name**
+
+3b.1. CheatLogs shows an error message.
+
+*Use case ends*
+
+**3c. User provides name / character above 250 characters**
+
+3c.1. CheatLogs shows an error message.
+
+*Use case ends*
+
+**6a. User clicks cancel Button** 
+
+6a.1. CheatSheet will not be created.
+    
+*Use case ends.*
+    
+**6b.** User clicks save when text editor is empty
+
+6b.1. The footer will show warning of a blank file to the User.
+
+*Use case resumes at step 5*
+
+### 7.3.2 Use Case: Edit CheatSheet
+#### MSS
+
+1. User request to edit a cheatsheet
+2. CheatLogs requests for name and index
+3. User provides name and index
+4. CheatLogs displays text editor with the cheatsheet content
+5. User fills in the content of the cheatsheet
+6. User clicks `Save` button
+7. CheatLogs edits the cheatsheet content.
+
+   *Use case ends.*
+#### Extensions
+**3a. User doesnt provide name and index**
+
+*3a.1. Use case resumes at step 2.*
+       
+**3b. User provides mismatching name and index**
+
+3b.1. CheatLogs will display error message
+
+*Use case ends*
+
+**3c. User provides non-existing cheatsheet**
+
+3c.1. CheatLogs will display error message
+
+*Use case ends*
+        
+**6a. User clicks cancel Button** 
+
+6a.1. CheatSheet changes will not be saved.
+    
+*Use case ends.*
+    
+**6b.** User clicks save when text editor is empty
+
+6b.1. The footer will show warning of a blank file to the User.
+
+*6b.2. Use case resumes at 5*
+
+### 7.3.3 Use Case: Delete CheatSheet
+#### MSS
+
+1. User request to delete a cheatsheet
+2. CheatLogs requests for name and index
+3. User provides name and index
+4. CheatLogs requests user confirmation
+5. User provides confirmation
+6. Cheatsheet is deleted
+
+   *Use case ends.*
+#### Extensions
+**3a. User doesnt provide name and index**
+
+*3a.1. Use case resumes at step 2.*
+
+**3b. User provides mismatching name and index**
+
+3b.1. CheatLogs will display error message
+
+*Use case ends*
+
+**3c. User provides non-existing cheatsheet**
+
+3c.1. CheatLogs will display error message
+
+*Use case ends*
+
+**4a. User provides wrong confirmation**
+
+4a.1. CheatLogs will not delete the cheatsheet
+
+*Use case ends*
+
+### 7.3.4 Use Case: Clear CheatSheet
+#### MSS
+
+1. User request to clear the cheatsheet list
+2. CheatLogs requests user confirmation
+3. User provides confirmation
+4. All user-made cheatsheet is deleted
+
+   *Use case ends.*
+#### Extensions
+**3a. User provides wrong confirmation key**
+    
+*3a.1. Use case returns to step 1*
+
+### 7.3.5 Use Case: Favorite CheatSheet
+#### MSS
+
+1. User request to favourite a cheatsheet
+2. CheatLogs requests for name and index
+3. User provides name or index
+4. CheatLogs favourites the CheatSheet.
+
+   *Use case ends.*
+#### Extensions
+**3a. User doesnt provide name and index**
+
+*3a.1. Use case resumes at step 2.*
+
+**3b. User provides mismatching name and index**
+
+3b.1. CheatLogs will display error message
+
+*Use case ends*
+
+**3c. User provides non-existing cheatsheet**
+
+3c.1. CheatLogs will display error message
+
+*Use case ends*
+        
+**3d. User provides already favourited cheatsheet**
+
+3d.1. CheatLogs will display the already favourited cheatsheet
+
+*Use case ends*
+
+### 7.3.6 Use Case: Find CheatSheet
+#### MSS
+
+1. User request to find a cheatsheet
+2. CheatLogs requests for name, index, or section keyword
+3. User provides name and index
+4. Cheatsheet is viewed
+
+   *Use case ends.*
+#### Extensions
+**3a. User doesnt provide name, index, or section keyword**
+
+*3a.1. Use case resumes at step 2.*
+
+**3b. User provides mismatching name and index**
+
+3b.1. CheatLogs will display error message
+
+*Use case ends*
+
+**3c. User provides non-existing cheatsheet attributes**
+
+3c.1. CheatLogs will display error message
+
+*Use case ends*
+
+### 7.3.7 Use Case: View CheatSheet
+#### MSS
+
+1. User request to find a cheatsheet
+2. CheatLogs requests for name or index
+3. User provides name and index
+4. Cheatsheet is viewed
+
+   *Use case ends.*
+#### Extensions
+**3a. User doesn't provide name and index**
+
+*3a.1. Use case resumes at step 2.*
+
+**3b. User provides mismatching name and index**
+
+3b.1. CheatLogs will display error message
+
+*Use case ends*
+
+**3c. User provides non-existing cheatsheet attributes**
+
+3c.1. CheatLogs will display error message.
+
+*Use case ends*
+
+### 7.3.8 Use Case: List CheatSheet
+#### MSS
+
+1. User request to list the cheatsheet
+2. User provides the cheat sheet list
+3. Cheatsheet is listed
+
+   *Use case ends.*
+#### Extensions
+**3a. The user request change sorting order**
+
+3a.1. CheatLogs will change sorting order
+
+*Use case resumes at Step 3*
+
+**3b. The user inputs invalid argument**
+
+3b.1. CheatLogs will exit the list command
+
+*Use case ends*
+
+### 7.3.3 Use Case: Exit Program
+#### MSS
+
+1. User request to exit the program.
+2. Cheatlogs terminates.
+
+   *Use case ends.*
 
 <a id="non-functional-requirements"></a>
 ## 7.4 Non-Functional Requirements<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
