@@ -519,8 +519,15 @@ Alternative 2: Save different sections of the cheat sheet using a different file
 
 <a id="product-scope-appendix"></a>
 ## 7.1 Product scope<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
-
-
+### Target User Profile
+    * has a need to manage cheatsheets
+    * beginner to programming
+    * prefers simple and easily legible version of official documentation
+    * preferes a small and light application
+    * proficient enough in navigating CLI
+#### Value Proposition
+    * Allows beginner programmer to learn faster without having to navigate through official documentation.
+    * Manage cheatsheets in a single unified application rather than navigating a messy file system.
 
 <a id="user-stories"></a>
 ## 7.2 User stories<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
