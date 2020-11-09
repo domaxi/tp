@@ -536,6 +536,7 @@ The command can execute at a random time later via commandObj.execute().12
 
 <a id="editing-feature"></a>
 ## 5.2. Editing Feauture<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
+![ContentEditor](https://i.ibb.co/hYtY1GM/Screenshot-2020-11-09-at-6-30-12-PM.png)
 
 The editing feature is enabled using a simple text editor that uses the JSwing Library. 
 The strong reason that we wanted to use a GUI is that it offers more flexibility and editing power for the user rather than just using command-line editing methods.
