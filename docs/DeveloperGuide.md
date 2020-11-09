@@ -463,13 +463,29 @@ The command can execute at a random time later via commandObj.execute().12
 <a id="editing-feature"></a>
 ## 5.2. Editing Feauture<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
 
-The editing feature is enabled using a simple text editor that uses a graphical user interface. 
+The editing feature is enabled using a simple text editor that uses the JSwing Library. 
 The strong reason that we wanted to use a GUI is that it offers more flexibility and editing power for the user rather than just using command-line editing methods.
 
+The editing feature is handled by the Editor class. The Text Editor inherits from JFrame and implements the Action Listener class. 
+The text editor is instantiated when the the user session is constructed.
+The text editor remains opened throughtout the program execution, but it is hidden.
+The text editor is shwon only when the AddCommand or the EditCommand is instantiated.
 
-The editing feature is handled by the TextEditor class. The Text Editor inherits from JFrame and implements the Action Listener class. 
-The text editor is instantiated when the edit command is invoked. 
+The text editor uses the Box Layout that divide the text editor into 5 sections, header,footer, left, right, and center.
+Each of the sections, are implemented using JPanel.
 
+* The header Panel contains the CheatLogs logo that is implemented using JLabel that contains an ImageIcon object.
+
+* The center panel is filled with the text editor, which is implemented using the JTextArea and JScrollPane. 
+Using both of those classes, the user can input any text into the text editor, except for escape characters.
+The text editor will have the horizontal and vertical scroll pane as needed, especially when loading long texts.
+
+* The right panel contains the buttons that is used for the editing and file functions, that include Copy, Cut, Paste, Clear All, Cancel, and Save.
+The buttons are created using the JButton class, and in each of the buttons there is an ActionListener to invoke actions to be processed by the editor.
+
+* The footer contains a JLabel that will display warning and the information of the CheatSheet that is being edited.
+
+Every time a button is pressed, the ActionEvent will be processed by the actionPerformed class, and a switch statement will control the actions and command executions.
 
 <a id="sorting-feature"></a>
 ## 5.3. Sorting Feature<font size="5"> [:arrow_up_small:](#table-of-contents)</font>
